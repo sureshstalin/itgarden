@@ -19,8 +19,6 @@ public class User extends BaseObject {
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> addressList;
-
-
 }

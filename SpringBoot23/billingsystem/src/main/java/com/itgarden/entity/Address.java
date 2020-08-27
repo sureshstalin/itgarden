@@ -1,5 +1,6 @@
 package com.itgarden.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,9 +31,8 @@ public class Address extends BaseObject {
     @Column(name = "MOBILE", nullable = false)
     private String mobile;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
+    @JsonIgnore
     private User user;
-
-
 }
