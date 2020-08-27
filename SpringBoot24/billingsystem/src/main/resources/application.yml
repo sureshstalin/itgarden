@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: billingsystem
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3307/billingdb
+    username: suresh
+    password: suresh123$$
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL=DEBUG:
+      springframework: info
