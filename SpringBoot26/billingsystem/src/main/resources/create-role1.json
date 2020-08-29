@@ -1,0 +1,16 @@
+{
+  "name":"GURU",
+  "description":"description",
+  "users":[
+    {
+      "email": "kishore@gmail.com",
+      "firstName": "Kishore",
+      "lastName": "Suresh"
+    },
+    {
+      "email": "barathan@gmail.com",
+      "firstName": "Barathan",
+      "lastName": "Suresh"
+    }
+  ]
+}
