@@ -1,0 +1,26 @@
+{
+  "email": "suresh@gmail.com",
+  "firstName": "Suresh",
+  "lastName": "Stalin",
+  "roles":[
+    {
+      "name":"Accountant",
+      "description":"This is Accountant Role"
+    },
+    {
+      "name":"Admin",
+      "description":"This is Admin Role"
+    }
+  ],
+  "addressList": [
+    {
+      "address1": "1st Street",
+      "address2": "2nd Street",
+      "city": "Chennai",
+      "state": "TN",
+      "country": "India",
+      "landmark": "Near",
+      "mobile": "383883"
+    }
+  ]
+}
