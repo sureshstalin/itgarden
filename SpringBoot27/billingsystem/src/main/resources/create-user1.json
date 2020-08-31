@@ -1,0 +1,16 @@
+{
+  "email": "kishore@gmail.com",
+  "firstName": "Kishore",
+  "lastName": "Suresh",
+  "addressList": [
+    {
+      "address1": "1st Street",
+      "address2": "2nd Street",
+      "city": "Chennai",
+      "state": "TN",
+      "country": "India",
+      "landmark": "Near",
+      "mobile": "383883"
+    }
+  ]
+}
