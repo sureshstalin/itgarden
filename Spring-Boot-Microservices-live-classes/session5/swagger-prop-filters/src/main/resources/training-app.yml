@@ -1,0 +1,11 @@
+simple:
+  name: Test
+data:
+  file-path: c:\files\types\images
+  username: admin
+  password: admin123
+  accessType: read
+system-codes:
+  customer-code: cust
+  product-code: prod1
+  vendor-code: vendor1

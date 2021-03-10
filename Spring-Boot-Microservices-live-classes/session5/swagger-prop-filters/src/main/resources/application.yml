@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: This is test application
