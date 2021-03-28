@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: billingsystem
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/local-db
+    username: training-admin
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: jwt-demo
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/training-db
+    username: training-admin
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  secretkey: secrete
+  access-token-expiration: 5000000
+  refresh-token-expiration: 10000000

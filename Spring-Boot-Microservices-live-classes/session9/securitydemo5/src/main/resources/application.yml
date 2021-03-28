@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: securitydemo5
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/training-db
+    username: training-admin
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
