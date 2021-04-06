@@ -1,0 +1,7 @@
+server:
+  port: 9092
+spring:
+  application:
+    name: account-service
+billing:
+  app: This is billing App Account dev Service demo
