@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Suresh",
+    "address": "address1",
+    "age": 30,
+    "product": [
+      {
+        "id": 1,
+        "productName": "Coffee",
+        "price": 200
+      },
+      {
+        "id": 2,
+        "productName": "Shirt",
+        "price": 300
+      },
+      {
+        "id": 3,
+        "productName": "Z Book",
+        "price": 100
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Barathan",
+    "address": "1st Street",
+    "age": 20,
+    "product": [
+      {
+        "id": 1,
+        "productName": "Play Station",
+        "price": 300
+      },
+      {
+        "id": 2,
+        "productName": "ICE Cream",
+        "price": 250
+      },
+      {
+        "id": 3,
+        "productName": "Chocolate",
+        "price": 130
+      }
+    ]
+  }]
