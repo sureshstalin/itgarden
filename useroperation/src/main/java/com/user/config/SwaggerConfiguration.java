@@ -20,12 +20,12 @@ public class SwaggerConfiguration {
 //    http://localhost:9091/swagger-ui/index.html
 
     public static final Contact CONTACT_DETAILS = new Contact(
-            "HNM Slutions", "http://www.useroperation.com", "info@hnmsolutions.eu");
+            "User Management", "http://www.useroperation.com", "info@useropertion.eu");
 
     public static final ApiInfo API_INFO = new ApiInfo(
-            "Euro Job Portal API", "Euro Job Portal API Description", "1.0",
+            "Euro Job Portal API", "User Management System", "1.0",
             "urn:tos", CONTACT_DETAILS,
-            "Billing System 1.0", "https://www.useroperation.com/licenses/LICENSE-2.0", Arrays.asList());
+            "User Management System 1.0", "https://www.useroperation.com/licenses/LICENSE-2.0", Arrays.asList());
 
     private static final Set<String> PRODUCES_AND_CONSUMES =
             new HashSet<String>(Arrays.asList("application/json"));
