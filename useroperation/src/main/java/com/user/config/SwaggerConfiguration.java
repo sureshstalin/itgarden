@@ -23,7 +23,7 @@ public class SwaggerConfiguration {
             "User Management", "http://www.useroperation.com", "info@useropertion.eu");
 
     public static final ApiInfo API_INFO = new ApiInfo(
-            "Euro Job Portal API", "User Management System", "1.0",
+            "User Management API", "User Management System", "1.0",
             "urn:tos", CONTACT_DETAILS,
             "User Management System 1.0", "https://www.useroperation.com/licenses/LICENSE-2.0", Arrays.asList());
 
