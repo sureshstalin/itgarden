@@ -1,0 +1,23 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: billingsystem
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: billing-admin
+    password: billing123$$
+    driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  secretkey: secrete
+  access-token-expiration: 5000000
+#  access-token-expiration: 50000
+  refresh-token-expiration: 10000000
+
+springdoc:
+  swagger-ui:
+    path=/swagger-ui.html
