@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-
-@Getter
-@Setter
+//
+//@Getter
+//@Setter
 @Table(name = "jwttoken")
 @Entity
 public class JwtToken {
@@ -33,4 +33,52 @@ public class JwtToken {
 
     @Column(name = "refresh_token_expiration")
     private LocalDateTime refreshTokenExpiration;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public LocalDateTime getAccessTokenExpiration() {
+        return accessTokenExpiration;
+    }
+
+    public void setAccessTokenExpiration(LocalDateTime accessTokenExpiration) {
+        this.accessTokenExpiration = accessTokenExpiration;
+    }
+
+    public LocalDateTime getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
+    }
+
+    public void setRefreshTokenExpiration(LocalDateTime refreshTokenExpiration) {
+        this.refreshTokenExpiration = refreshTokenExpiration;
+    }
 }

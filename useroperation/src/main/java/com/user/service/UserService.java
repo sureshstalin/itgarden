@@ -41,16 +41,19 @@ public class UserService {
 
     public User getUser(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
+        user.setPassword(null);
         return user;
     }
 
     public User getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
+        user.setPassword(null);
         return user;
     }
 
     public List<User> getAllUser() {
         List<User> users = userRepository.findAll();
+        users.forEach((u) -> u.setPassword(null));
         return users;
     }
 

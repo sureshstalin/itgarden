@@ -73,29 +73,4 @@ public class LoginController {
             return new ResponseEntity<String>("Authentication Failure", HttpStatus.BAD_REQUEST);
         }
     }
-
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshToken(@RequestBody AuthenticationRequestInfo authenticationRequest, HttpServletRequest request) throws Exception {
-        String refreshToken = authenticationRequest.getRefreshToken();
-        //Validate the token while extracting user.
-        if (jwtUtilService.isRefreshTokenExpired(refreshToken)) {
-            throw new InvalidTokenException("Invalid Token: The Refresh Token is Expired");
-        }
-        String username = jwtUtilService.extractUsername(refreshToken, TokenType.REFRESH_TOKEN);
-//        jwtUtils.extractUsername(refreshToken,TokenType.REFRESH_TOKEN);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        try {
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
-            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        } catch (BadCredentialsException bce) {
-            throw new InvalidUserNamePasswordException("The given user name and password is invalid");
-        }
-        AuthenticationResponseInfo authenticationResponseDTO = userDetailsService.generateAuthResponse(userDetails, TokenType.REFRESH_TOKEN);
-        JwtToken jwtTokenResponse = userDetailsService.saveJwt(authenticationResponseDTO);
-        return new ResponseEntity<JwtToken>(jwtTokenResponse, HttpStatus.OK);
-    }
-
-
 }
