@@ -32,6 +32,8 @@ public class UserService {
                 throw new DuplicateResourceFoundException("Email id already exist");
             }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            boolean result = passwordEncoder.matches("123", user.getPassword());
+            System.out.println("The password is  " + result);
             user.setDateCreated(LocalDateTime.now());
         } else {
             user.setLastModified(LocalDateTime.now());

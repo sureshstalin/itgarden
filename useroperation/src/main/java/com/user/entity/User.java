@@ -2,106 +2,55 @@ package com.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-//@Getter
-//@Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
+    @ApiModelProperty(notes = "Auto generated User ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    @ApiModelProperty(notes = "Valid email id",required = true)
     @Column(name = "email")
     private String email;
 
+    @ApiModelProperty(notes = "First Name",required = true)
     @Column(name = "first_name")
     private String firstName;
 
+    @ApiModelProperty(notes = "Last Name",required = true)
     @Column(name = "last_name")
     private String lastName;
 
+    @ApiModelProperty(notes = "Password",required = true)
     @Column(name = "password")
     private String password;
 
+    @ApiModelProperty(notes = "Created Date")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
+    @ApiModelProperty(notes = "Modified Date")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(name = "last_modified")
     private LocalDateTime lastModified;
 
+    @ApiModelProperty(notes = "Valid Mobile No",required = true)
     @Column(name = "mobile_no")
     private String mobileNo;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public LocalDateTime getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    public String getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
-    }
 }
