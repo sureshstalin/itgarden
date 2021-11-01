@@ -2,6 +2,8 @@ package com.user.service;
 
 import com.user.entity.User;
 import com.user.exception.DuplicateResourceFoundException;
+import com.user.exception.InvalidInputException;
+import com.user.exception.ResourceNotFoundException;
 import com.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
+
 public class UserService {
 
     @Autowired
@@ -20,8 +25,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User save(User user) throws DuplicateResourceFoundException {
@@ -32,8 +38,8 @@ public class UserService {
                 throw new DuplicateResourceFoundException("Email id already exist");
             }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            boolean result = passwordEncoder.matches("123", user.getPassword());
-            System.out.println("The password is  " + result);
+//            boolean result = passwordEncoder.matches("123", user.getPassword());
+//            System.out.println("The password is  " + result);
             user.setDateCreated(LocalDateTime.now());
         } else {
             user.setLastModified(LocalDateTime.now());
@@ -41,10 +47,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUser(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        user.setPassword(null);
-        return user;
+    public User getUser(Long userId) throws InvalidInputException {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if(optionalUser == null) {
+            throw new ResourceNotFoundException("Resource not found");
+        }else {
+            User user  = optionalUser.get();
+            user.setPassword(null);
+            return user;
+        }
+
     }
 
     public User getUserByEmail(String email) {

@@ -23,7 +23,7 @@ public class UserController {
 
     // Rest API Standard purpose we are passing user id for update
     @PutMapping("/{userId}")
-    public ResponseEntity<?> addUser(@RequestBody User user, @PathVariable("userId") Long userId,@RequestHeader("Authorization") String authString)
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable("userId") Long userId,@RequestHeader("Authorization") String authString)
             throws DuplicateResourceFoundException {
         User newUser = userService.save(user);
         ResponseEntity<User> responseEntity =
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping("/email/{emailId}")
-    public ResponseEntity<?> getUserByEmailId(@PathVariable("email") String email,@RequestHeader("Authorization") String authString) {
+    public ResponseEntity<?> getUserByEmailId(@PathVariable("emailId") String email,@RequestHeader("Authorization") String authString) {
         User user = userService.getUserByEmail(email);
         ResponseEntity<User> responseEntity =
                 new ResponseEntity<User>(user, HttpStatus.OK);

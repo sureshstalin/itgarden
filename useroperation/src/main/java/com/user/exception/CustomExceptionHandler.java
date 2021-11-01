@@ -6,6 +6,7 @@ import com.user.model.ErrorMessage;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,9 @@ import java.util.List;
 @ControllerAdvice
 @RestController
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @Autowired
+    private Utils utils;
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException arguments, HttpHeaders headers,
@@ -57,7 +61,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleCustomException(Exception ex, WebRequest request) throws Exception {
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), Utils.currentDateTime());
+        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
         log.info("Clsss name " + ex.getClass().getName());
         log.info("type name " + ex.getClass().getTypeName());
 
@@ -68,23 +72,23 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> invalidInputException(InvalidInputException ex, WebRequest request) throws Exception {
         ErrorMessage errorMessage = null;
         if (ex.getErrorList() != null && ex.getErrorList().size() > 0) {
-            errorMessage = new ErrorMessage(StringUtils.join(ex.getErrorList(), "\n"), Utils.currentDateTime());
+            errorMessage = new ErrorMessage(StringUtils.join(ex.getErrorList(), "\n"), utils.currentDateTime());
         } else {
-            errorMessage = new ErrorMessage(ex.getMessage(), Utils.currentDateTime());
+            errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
         }
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public final ResponseEntity<Object> resourceNotFound(ResourceNotFoundException ex, WebRequest request) throws Exception {
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), Utils.currentDateTime());
+        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public final ResponseEntity<Object> dataIntegrity(DataIntegrityViolationException ex, WebRequest request) throws Exception {
-        ErrorMessage errorMessage = new ErrorMessage("The generated code already exist", Utils.currentDateTime());
+        ErrorMessage errorMessage = new ErrorMessage("The generated code already exist", utils.currentDateTime());
         System.out.println("Error message " + errorMessage.getErrorMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
 
@@ -92,19 +96,19 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ExpiredJwtException.class)
     public final ResponseEntity<Object> tokenExpired(ExpiredJwtException ex, WebRequest webRequest) {
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), Utils.currentDateTime());
+        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidTokenException.class)
     public final ResponseEntity<Object> invalidToken(InvalidTokenException ex, WebRequest webRequest) {
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), Utils.currentDateTime());
+        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateResourceFoundException.class)
     public final ResponseEntity<Object> invalidToken(DuplicateResourceFoundException ex, WebRequest webRequest) {
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), Utils.currentDateTime());
+        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
 

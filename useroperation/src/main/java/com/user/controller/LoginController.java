@@ -2,6 +2,7 @@ package com.user.controller;
 
 
 import com.user.entity.JwtToken;
+import com.user.exception.InvalidInputException;
 import com.user.exception.InvalidTokenException;
 import com.user.exception.InvalidUserNamePasswordException;
 import com.user.model.AuthenticationRequestInfo;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -49,12 +51,15 @@ public class LoginController {
     private JwtTokenRepository jwtTokenRepository;
 
     @PostMapping
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestInfo authenticationRequest) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequestInfo authenticationRequest) {
         log.info("AUTHENTICATING USER NAME AND PASSWORD");
         try {
             // This authenticate method call AuthenticationService.loadUserByUsername
             String userName = authenticationRequest.getUserName();
             String password = authenticationRequest.getPassword();
+            if(userName == null || userName.length() == 0) {
+                throw new InvalidInputException();
+            }
             String encodedPassword = passwordEncoder.encode(password);
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userName, password));

@@ -33,6 +33,9 @@ public class LoginUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    Utils utils;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
@@ -48,30 +51,15 @@ public class LoginUserDetailsService implements UserDetailsService {
         if (tokenType.equals(TokenType.ACCESS_TOKEN)) {
             String accessToken = jwtUtilService.generateAccessToken(userDetails);
             final Claims accessclaims = jwtUtilService.extractAllClaims(accessToken);
-            String refreshToken = jwtUtilService.generateRefreshToken(userDetails);
-            final Claims refreshClaims = jwtUtilService.extractAllClaims(refreshToken);
             authenticationResponseInfo = new AuthenticationResponseInfo();
             authenticationResponseInfo.setAccessToken(accessToken);
-            authenticationResponseInfo.setRefreshToken(refreshToken);
             authenticationResponseInfo.setUserName(userDetails.getUsername());
-            authenticationResponseInfo.setAccessTokenExpiration(Utils.convertToLocalDateTime(accessclaims.getExpiration().getTime()));
-            authenticationResponseInfo.setRefreshTokenExpiration(Utils.convertToLocalDateTime(refreshClaims.getExpiration().getTime()));
+            authenticationResponseInfo.setAccessTokenExpiration(utils.convertToLocalDateTime(accessclaims.getExpiration().getTime()));
+//            authenticationResponseInfo.setRefreshTokenExpiration(utils.convertToLocalDateTime(refreshClaims.getExpiration().getTime()));
             if (jwtToken != null) {
                 authenticationResponseInfo.setId(jwtToken.getId());
             }
         }
-        if (tokenType.equals(TokenType.REFRESH_TOKEN)) {
-            String accessToken = jwtUtilService.generateAccessToken(userDetails);
-            final Claims accessclaims = jwtUtilService.extractAllClaims(accessToken);
-            authenticationResponseInfo = new AuthenticationResponseInfo();
-            authenticationResponseInfo.setAccessToken(accessToken);
-            authenticationResponseInfo.setRefreshToken(jwtToken.getRefreshToken());
-            authenticationResponseInfo.setUserName(userDetails.getUsername());
-            authenticationResponseInfo.setAccessTokenExpiration(Utils.convertToLocalDateTime(accessclaims.getExpiration().getTime()));
-            authenticationResponseInfo.setRefreshTokenExpiration(jwtToken.getRefreshTokenExpiration());
-            authenticationResponseInfo.setId(jwtToken.getId());
-        }
-
         return authenticationResponseInfo;
     }
 
@@ -82,6 +70,7 @@ public class LoginUserDetailsService implements UserDetailsService {
         jwtToken.setAccessTokenExpiration(authenticationResponseInfo.getAccessTokenExpiration());
         jwtToken.setRefreshTokenExpiration(authenticationResponseInfo.getRefreshTokenExpiration());
         jwtToken.setId(authenticationResponseInfo.getId());
+
         jwtToken.setUserName(authenticationResponseInfo.getUserName());
         JwtToken jwtTokenResponse = jwtTokenRepository.save(jwtToken);
         return jwtTokenResponse;

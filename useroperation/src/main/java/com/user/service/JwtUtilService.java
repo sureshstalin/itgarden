@@ -58,10 +58,6 @@ public class JwtUtilService {
     }
 
 
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
 
@@ -82,23 +78,19 @@ public class JwtUtilService {
 
     }
 
-    public Boolean isRefreshTokenExpired(String token) throws InvalidTokenException {
-        final String username = extractUsername(token, TokenType.REFRESH_TOKEN);
-        JwtToken jwtToken = jwtTokenRepository.findByUserName(username);
-        LocalDateTime refreshLocalDateTime = jwtToken.getRefreshTokenExpiration();
-        LocalDateTime currentLocalDateTime = LocalDateTime.now();
-        return currentLocalDateTime.isAfter(refreshLocalDateTime);
-    }
+//    public Boolean isRefreshTokenExpired(String token) throws InvalidTokenException {
+//        final String username = extractUsername(token, TokenType.REFRESH_TOKEN);
+//        JwtToken jwtToken = jwtTokenRepository.findByUserName(username);
+//        LocalDateTime refreshLocalDateTime = jwtToken.getRefreshTokenExpiration();
+//        LocalDateTime currentLocalDateTime = LocalDateTime.now();
+//        return currentLocalDateTime.isAfter(refreshLocalDateTime);
+//    }
 
     public String generateAccessToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername(), TokenType.ACCESS_TOKEN);
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername(), TokenType.REFRESH_TOKEN);
-    }
 
     /*
      * Generates JWT Token with Claims (subject,issued At,Expiration)
@@ -109,20 +101,17 @@ public class JwtUtilService {
             return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
                     .signWith(SignatureAlgorithm.HS256, secret).compact();
-        } else {
-            return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                    .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
-                    .signWith(SignatureAlgorithm.HS256, secret).compact();
         }
+        return null;
     }
 
     public Boolean isValidToken(String token, TokenType tokenType) throws InvalidTokenException {
         List<String> errorList = new ArrayList<>();
-        if (tokenType.equals(TokenType.REFRESH_TOKEN)) {
-            if (isRefreshTokenExpired(token)) {
-                errorList.add("Invalid Refresh Token: Refresh Token is expired");
-            }
-        }
+//        if (tokenType.equals(TokenType.REFRESH_TOKEN)) {
+//            if (isRefreshTokenExpired(token)) {
+//                errorList.add("Invalid Refresh Token: Refresh Token is expired");
+//            }
+//        }
         if (tokenType.equals(TokenType.ACCESS_TOKEN)) {
             if (isAccessTokenExpired(token)) {
                 errorList.add("Invalid Access Token: Access Token is expired");
