@@ -46,7 +46,7 @@ public class PasswordService {
     }
 
     public List<UserPassword> getPasswordByUserId(Long userId) {
-        List<UserPassword> userPasswords = userPasswordRepository.findAll();
+        List<UserPassword> userPasswords = userPasswordRepository.findByUserId(userId);
         return userPasswords;
     }
 
