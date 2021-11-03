@@ -18,35 +18,40 @@ public class UserPasswordController {
     private PasswordService passwordService;
 
     @PostMapping("/add")
-    public ResponseEntity<UserPassword>  addPassword(@RequestBody UserPasswordRequest userPasswordRequest) {
+    public ResponseEntity<UserPassword>
+    addPassword(@RequestBody UserPasswordRequest userPasswordRequest,@RequestHeader("Authorization") String authString) {
         UserPassword userPassword = passwordService.addPassword(userPasswordRequest);
         ResponseEntity<UserPassword> responseEntity = new ResponseEntity<UserPassword>(userPassword, HttpStatus.CREATED);
         return responseEntity;
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UserPassword>  updatePassword(@RequestBody UserPasswordRequest userPasswordRequest) {
+    public ResponseEntity<UserPassword>
+    updatePassword(@RequestBody UserPasswordRequest userPasswordRequest,@RequestHeader("Authorization") String authString) {
         UserPassword userPassword = passwordService.updatePassword(userPasswordRequest);
         ResponseEntity<UserPassword> responseEntity = new ResponseEntity<UserPassword>(userPassword, HttpStatus.OK);
         return responseEntity;
     }
 
     @GetMapping("/{userId}/{passwordId}")
-    public ResponseEntity<UserPassword>  viewPasswordByIdAndUserId(@PathVariable Long passwordId,@PathVariable Long userId) {
+    public ResponseEntity<UserPassword>
+    viewPasswordByIdAndUserId(@PathVariable Long passwordId,@PathVariable Long userId,@RequestHeader("Authorization") String authString) {
         UserPassword userPassword = passwordService.getPasswordByUserIdAndPasswordId(passwordId,userId);
         ResponseEntity<UserPassword> responseEntity = new ResponseEntity<UserPassword>(userPassword, HttpStatus.OK);
         return responseEntity;
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<UserPassword>>  viewPasswordByIdAndUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<UserPassword>>
+    viewPasswordByIdAndUserId(@PathVariable Long userId,@RequestHeader("Authorization") String authString) {
         List<UserPassword> userPasswords = passwordService.getPasswordByUserId(userId);
         ResponseEntity<List<UserPassword>> responseEntity = new ResponseEntity<List<UserPassword>>(userPasswords, HttpStatus.OK);
         return responseEntity;
     }
 
     @DeleteMapping("/{userId}/{passwordId}")
-    public ResponseEntity<Void> deletePassword(@PathVariable Long passwordId,@PathVariable Long userId) {
+    public ResponseEntity<Void>
+    deletePassword(@PathVariable Long passwordId,@PathVariable Long userId,@RequestHeader("Authorization") String authString) {
         passwordService.deletePasswordByIdAndUserId(passwordId,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
