@@ -2,7 +2,9 @@ package com.user.service;
 
 
 import com.user.entity.User;
+import com.user.entity.UserPassword;
 import com.user.exception.DuplicateResourceFoundException;
+import com.user.exception.InvalidInputException;
 import com.user.exception.ResourceNotFoundException;
 import com.user.repository.UserRepository;
 import com.user.service.UserService;
@@ -41,15 +43,24 @@ public class UserServiceTest {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         try {
             User user = new User();
-            user.setPassword("133");
+//            user.setPassword("133");
             user.setDateCreated(LocalDateTime.now());
             user.setEmail("suresh@gmail.com");
             user.setFirstName("Suresh");
             user.setLastName("Kesavan");
             user.setMobileNo("83838833");
+            List<UserPassword> userPasswords = new ArrayList<>();
+            UserPassword userPassword = new UserPassword();
+            userPassword.setPassword("123");
+            userPassword.setUser(user);
+            userPassword.setAppName("test");
+            userPassword.setId(1l);
+            userPasswords.add(userPassword);
+            user.setUserPasswords(userPasswords);
+
             UserRepository userRepository = mock(UserRepository.class);
             when(userRepository.findUserByEmail(anyString())).thenReturn(null);
-            when(passwordEncoder.encode(anyString())).thenReturn(encoder.encode(user.getPassword()));
+//            when(passwordEncoder.encode(anyString())).thenReturn(encoder.encode(user.getPassword()));
             UserService userService = new UserService(userRepository, passwordEncoder);
             when(userRepository.save(user)).thenReturn(user);
             User newUser = userService.save(user);
@@ -65,12 +76,20 @@ public class UserServiceTest {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         try {
             User user = new User();
-            user.setPassword("133");
+//            user.setPassword("133");
             user.setDateCreated(LocalDateTime.now());
             user.setEmail("suresh@gmail.com");
             user.setFirstName("Suresh");
             user.setLastName("Kesavan");
             user.setMobileNo("83838833");
+            List<UserPassword> userPasswords = new ArrayList<>();
+            UserPassword userPassword = new UserPassword();
+            userPassword.setPassword("123");
+            userPassword.setUser(user);
+            userPassword.setAppName("test");
+            userPassword.setId(1l);
+            userPasswords.add(userPassword);
+            user.setUserPasswords(userPasswords);
             UserRepository userRepository = mock(UserRepository.class);
             User dupUser = new User();
             dupUser.setId(133l);
@@ -95,13 +114,21 @@ public class UserServiceTest {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         try {
             User user = new User();
-            user.setId(2l);
-            user.setPassword("133");
+            user.setId(22l);
+//            user.setPassword("133");
             user.setDateCreated(LocalDateTime.now());
             user.setEmail("suresh@gmail.com");
             user.setFirstName("Suresh");
             user.setLastName("Kesavan");
             user.setMobileNo("83838833");
+            List<UserPassword> userPasswords = new ArrayList<>();
+            UserPassword userPassword = new UserPassword();
+            userPassword.setPassword("123");
+            userPassword.setUser(user);
+            userPassword.setAppName("test");
+            userPassword.setId(1l);
+            userPasswords.add(userPassword);
+            user.setUserPasswords(userPasswords);
             UserRepository userRepository = mock(UserRepository.class);
             when(userRepository.findUserByEmail(anyString())).thenReturn(null);
             UserService userService = new UserService(userRepository, passwordEncoder);
@@ -118,13 +145,21 @@ public class UserServiceTest {
     @Test
     public void getUserTest() {
         User user = new User();
+//            user.setPassword("133");
         user.setId(2l);
-        user.setPassword("133");
         user.setDateCreated(LocalDateTime.now());
         user.setEmail("suresh@gmail.com");
         user.setFirstName("Suresh");
         user.setLastName("Kesavan");
         user.setMobileNo("83838833");
+        List<UserPassword> userPasswords = new ArrayList<>();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword("123");
+        userPassword.setUser(user);
+        userPassword.setAppName("test");
+        userPassword.setId(1l);
+        userPasswords.add(userPassword);
+        user.setUserPasswords(userPasswords);
         Optional<User> optionalUser = Optional.of(user);
         UserRepository userRepository = mock(UserRepository.class);
         when(userRepository.findById(anyLong())).thenReturn(optionalUser);
@@ -152,13 +187,21 @@ public class UserServiceTest {
     @Test
     public void getUserByEmailTest() {
         User user = new User();
+//            user.setPassword("133");
         user.setId(2l);
-        user.setPassword("133");
         user.setDateCreated(LocalDateTime.now());
         user.setEmail("suresh@gmail.com");
         user.setFirstName("Suresh");
         user.setLastName("Kesavan");
         user.setMobileNo("83838833");
+        List<UserPassword> userPasswords = new ArrayList<>();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword("123");
+        userPassword.setUser(user);
+        userPassword.setAppName("test");
+        userPassword.setId(1l);
+        userPasswords.add(userPassword);
+        user.setUserPasswords(userPasswords);
         UserRepository userRepository = mock(UserRepository.class);
         when(userRepository.findUserByEmail(anyString())).thenReturn(user);
         UserService userService = new UserService(userRepository, passwordEncoder);
@@ -169,26 +212,70 @@ public class UserServiceTest {
     }
 
     @Test
+    public void getUserByEmailIvalidTest() {
+        try {
+            User user = new User();
+//            user.setPassword("133");
+            user.setId(2l);
+            user.setDateCreated(LocalDateTime.now());
+            user.setEmail("suresh@gmail.com");
+            user.setFirstName("Suresh");
+            user.setLastName("Kesavan");
+            user.setMobileNo("83838833");
+            List<UserPassword> userPasswords = new ArrayList<>();
+            UserPassword userPassword = new UserPassword();
+            userPassword.setPassword("123");
+            userPassword.setUser(user);
+            userPassword.setAppName("test");
+            userPassword.setId(1l);
+            userPasswords.add(userPassword);
+            user.setUserPasswords(userPasswords);
+            UserRepository userRepository = mock(UserRepository.class);
+            when(userRepository.findUserByEmail(anyString())).thenReturn(null);
+            UserService userService = new UserService(userRepository, passwordEncoder);
+            User myUser = userService.getUserByEmail("suresh1@gmail.com");
+            Assertions.assertThrows(InvalidInputException.class, () -> {
+            });
+        }catch (InvalidInputException e) {
+            System.out.println("Exception " + e.getErrorList());
+        }
+    }
+
+    @Test
     public void getAllUserTest() {
 
         List<User> userList = new ArrayList<>();
         User user1 = new User();
-        user1.setId(2l);
-        user1.setPassword("133");
+//            user.setPassword("133");
         user1.setDateCreated(LocalDateTime.now());
         user1.setEmail("suresh1@gmail.com");
         user1.setFirstName("Suresh");
         user1.setLastName("Kesavan");
         user1.setMobileNo("83838833");
+        List<UserPassword> userPasswords = new ArrayList<>();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword("123");
+        userPassword.setUser(user1);
+        userPassword.setAppName("test");
+        userPassword.setId(1l);
+        userPasswords.add(userPassword);
+        user1.setUserPasswords(userPasswords);
 
         User user2 = new User();
-        user2.setId(2l);
-        user2.setPassword("133");
+//            user.setPassword("133");
         user2.setDateCreated(LocalDateTime.now());
         user2.setEmail("suresh2@gmail.com");
         user2.setFirstName("Suresh");
         user2.setLastName("Kesavan");
         user2.setMobileNo("83838833");
+        List<UserPassword> userPasswords2 = new ArrayList<>();
+        UserPassword userPassword2 = new UserPassword();
+        userPassword2.setPassword("123");
+        userPassword2.setUser(user2);
+        userPassword2.setAppName("test");
+        userPassword2.setId(1l);
+        userPasswords2.add(userPassword);
+        user2.setUserPasswords(userPasswords);
         userList.add(user1);
         userList.add(user2);
 
@@ -201,5 +288,33 @@ public class UserServiceTest {
         Assertions.assertEquals("suresh1@gmail.com", users.get(0).getEmail());
         Assertions.assertEquals("suresh2@gmail.com", users.get(1).getEmail());
 
+    }
+
+    @Test
+    public void deleteByUserIdTest() {
+        try {
+            User user = new User();
+//            user.setPassword("133");
+            user.setId(2l);
+            user.setDateCreated(LocalDateTime.now());
+            user.setEmail("suresh@gmail.com");
+            user.setFirstName("Suresh");
+            user.setLastName("Kesavan");
+            user.setMobileNo("83838833");
+            List<UserPassword> userPasswords = new ArrayList<>();
+            UserPassword userPassword = new UserPassword();
+            userPassword.setPassword("123");
+            userPassword.setUser(user);
+            userPassword.setAppName("test");
+            userPassword.setId(1l);
+            userPasswords.add(userPassword);
+            user.setUserPasswords(userPasswords);
+            UserRepository userRepository = mock(UserRepository.class);
+            doNothing().when(userRepository).deleteById(anyLong());
+            UserService userService = new UserService(userRepository, passwordEncoder);
+            userService.deleteUserById(1l);
+        }catch (InvalidInputException e) {
+            System.out.println("Exception " + e.getErrorList());
+        }
     }
 }

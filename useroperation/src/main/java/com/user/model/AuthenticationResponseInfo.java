@@ -20,11 +20,7 @@ public class AuthenticationResponseInfo {
 
     private String accessToken;
 
-    private String refreshToken;
-
     private LocalDateTime accessTokenExpiration;
-
-    private LocalDateTime refreshTokenExpiration;
 
     @JsonIgnore
     private String userName;

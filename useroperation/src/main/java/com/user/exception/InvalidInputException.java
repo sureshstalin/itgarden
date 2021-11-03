@@ -5,10 +5,7 @@ import java.util.List;
 public class InvalidInputException extends RuntimeException {
 
     private List<String> errorList;
-    public InvalidInputException(String message) {
-        super(message);
-    }
-    public InvalidInputException() {}
+
     public InvalidInputException(List<String> errorList) {
         this.errorList = errorList;
     }

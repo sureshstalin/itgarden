@@ -2,12 +2,16 @@ package com.user.controller;
 
 import com.user.entity.User;
 import com.user.exception.DuplicateResourceFoundException;
+import com.user.exception.InvalidInputException;
+import com.user.model.ErrorMessage;
 import com.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,6 +56,7 @@ public class UserController {
     @GetMapping("/email/{emailId}")
     public ResponseEntity<?> getUserByEmailId(@PathVariable("emailId") String email,@RequestHeader("Authorization") String authString) {
         User user = userService.getUserByEmail(email);
+
         ResponseEntity<User> responseEntity =
                 new ResponseEntity<User>(user, HttpStatus.OK);
         return responseEntity;

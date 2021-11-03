@@ -22,7 +22,6 @@ public class    AuthenticationRequestInfo {
 
     @NotEmpty(message = "Password Name can't be Empty")
     private String password;
-//    private String refreshToken;
 
 
 }

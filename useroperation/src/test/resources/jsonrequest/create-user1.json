@@ -1,0 +1,17 @@
+{
+  "firstName":"Ram",
+  "lastName":"Charan",
+  "email":"ram@gmail.com",
+  "mobileNo":"2828282",
+  "userPasswords":[
+    {
+      "password":"123",
+      "appName":"useropertion"
+    },
+    {
+      "password":"12345",
+      "appName":"myapp"
+    }
+  ]
+
+}

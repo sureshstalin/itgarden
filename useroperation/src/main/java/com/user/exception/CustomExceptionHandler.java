@@ -100,12 +100,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(InvalidTokenException.class)
-    public final ResponseEntity<Object> invalidToken(InvalidTokenException ex, WebRequest webRequest) {
-        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(DuplicateResourceFoundException.class)
     public final ResponseEntity<Object> invalidToken(DuplicateResourceFoundException ex, WebRequest webRequest) {
         ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), utils.currentDateTime());

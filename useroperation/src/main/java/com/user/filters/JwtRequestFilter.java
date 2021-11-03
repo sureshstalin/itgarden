@@ -58,12 +58,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     System.out.println("Authentication is failed: Can't set authentication in Security Context");
                 }
             }
-        } catch (ExpiredJwtException e) {
-            throw new InvalidInputException("The given Token is expired or invalid");
-        } catch (BadCredentialsException e) {
-            throw new InvalidInputException("Invalid Credential or Invalid token");
-        } catch (Exception ex) {
-            throw ex;
+        } catch (Exception e) {
+            throw new RuntimeException("The given Token is expired or invalid");
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

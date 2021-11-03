@@ -3,6 +3,7 @@ package com.user.service;
 import com.user.common.Utils;
 import com.user.entity.JwtToken;
 import com.user.entity.User;
+import com.user.entity.UserPassword;
 import com.user.model.AuthenticationResponseInfo;
 import com.user.repository.JwtTokenRepository;
 import com.user.repository.UserRepository;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -54,12 +56,21 @@ public class LoginUserDetailsServiceTest {
     public void loadByUserNameTest() {
 
         User user = new User();
-        user.setPassword("133");
+//            user.setPassword("133");
+        user.setId(2l);
         user.setDateCreated(LocalDateTime.now());
         user.setEmail("suresh@gmail.com");
         user.setFirstName("Suresh");
         user.setLastName("Kesavan");
         user.setMobileNo("83838833");
+        List<UserPassword> userPasswords = new ArrayList<>();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword("123");
+        userPassword.setUser(user);
+        userPassword.setAppName("test");
+        userPassword.setId(1l);
+        userPasswords.add(userPassword);
+        user.setUserPasswords(userPasswords);
         when(userRepository.findUserByEmail(anyString())).thenReturn(user);
         UserDetails userDetails =
                 loginUserDetailsService.loadUserByUsername("suresh@gmail.com");

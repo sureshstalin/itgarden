@@ -104,7 +104,14 @@
 						</goals>
 						<configuration>
 							<!-- Sets the path to the file which contains the execution data. -->
-
+							<excludes>
+								<exclude>com/user/config/**</exclude>
+								<exclude>com/user/entity/**</exclude>
+								<exclude>com/user/model/**</exclude>
+								<exclude>com/user/filters/**</exclude>
+								<exclude>com/user/Application.class</exclude>
+								<exclude>com/user/exception/InvalidUserNamePasswordException.class</exclude>
+							</excludes>
 							<dataFile>target/jacoco.exec</dataFile>
 							<!-- Sets the output directory for the code coverage report. -->
 							<outputDirectory>target/my-reports</outputDirectory>

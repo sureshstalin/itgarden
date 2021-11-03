@@ -3,7 +3,6 @@ package com.user.controller;
 
 import com.user.entity.JwtToken;
 import com.user.exception.InvalidInputException;
-import com.user.exception.InvalidTokenException;
 import com.user.exception.InvalidUserNamePasswordException;
 import com.user.model.AuthenticationRequestInfo;
 import com.user.model.AuthenticationResponseInfo;
@@ -18,16 +17,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
@@ -57,10 +53,6 @@ public class LoginController {
             // This authenticate method call AuthenticationService.loadUserByUsername
             String userName = authenticationRequest.getUserName();
             String password = authenticationRequest.getPassword();
-            if(userName == null || userName.length() == 0) {
-                throw new InvalidInputException();
-            }
-            String encodedPassword = passwordEncoder.encode(password);
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userName, password));
 

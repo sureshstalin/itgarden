@@ -2,10 +2,8 @@ package com.user.service;
 
 import com.user.entity.JwtToken;
 import com.user.exception.InvalidInputException;
-import com.user.exception.InvalidTokenException;
 import com.user.repository.JwtTokenRepository;
 import com.user.repository.UserRepository;
-import com.user.service.JwtUtilService;
 import com.user.staticdata.TokenType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,9 +39,9 @@ public class JWTUtilServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXJlc2hAZ21haWwuY29tIiwiZXhwIjoxNjM1NzY4MTc5LCJpYXQiOjE2MzU3NjMxNzl9.-coDfYtOnoZ740pXDoSzkHHIKONWDCOu1uQMsBz62y8";
+    String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXJlc2hAZ21haWwuY29tIiwiZXhwIjoxNjM1ODgxNjEzLCJpYXQiOjE2MzU4NzY2MTN9.nueMnyDHrPjV2upod8JLzhCKAG17i74kRBM4YtJ6-0M";
 
-    String invalidToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXJlc2hAZ21haWwuY29tIiwiZXhwIjoxNjM1NzY4MTc5LCJpYXQiOjE2MzU3NjMxNzl9.-coDfYtOnoZ740pXDoSzkHHIKONWDCOu1uQMsBz62y8";
+    String invalidToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXJlc2hAZ21haWwuY29tIiwiZXhwIjoxNjM1ODgxNjEzLCJpYXQiOjE2MzU4NzY2MTN9.nueMnyDHrPjV2upod8JLzhCKAG17i74kRBM4YtJ6-0M";
     LocalDateTime localDateTime = LocalDateTime.now();
     ZonedDateTime zdt = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
     long currentLong = zdt.toInstant().toEpochMilli();
@@ -88,7 +86,6 @@ public class JWTUtilServiceTest {
         jwtToken.setAccessToken(token);
         jwtToken.setRefreshToken(token);
         jwtToken.setAccessTokenExpiration(accessTokenExpirationTime);
-        jwtToken.setRefreshTokenExpiration(refreshTokenExpirationTime);
         jwtToken.setId(2l);
         when(jwtTokenRepository.findByUserName(anyString())).thenReturn(jwtToken);
         String userName = jwtUtilService.extractUsername(token, TokenType.ACCESS_TOKEN);
@@ -102,8 +99,9 @@ public class JWTUtilServiceTest {
         try {
             when(jwtTokenRepository.findByUserName(anyString())).thenReturn(jwtToken);
             String userName = jwtUtilService.extractUsername(token, TokenType.ACCESS_TOKEN);
-            Assertions.assertThrows(InvalidTokenException.class, () -> {
-            });
+            Assertions.assertNull(userName);
+//            Assertions.assertThrows(InvalidInputException.class, () -> {
+//            });
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }

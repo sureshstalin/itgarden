@@ -81,9 +81,7 @@ public class LoginControllerTest {
                 "133", new ArrayList<>());
         AuthenticationResponseInfo authenticationResponseInfo = new AuthenticationResponseInfo();
         authenticationResponseInfo.setAccessTokenExpiration(accessTokenExpirationTime);
-        authenticationResponseInfo.setRefreshTokenExpiration(refreshTokenExpirationTime);
         authenticationResponseInfo.setId(2l);
-        authenticationResponseInfo.setRefreshToken("refreshfasfsafsadfdsf");
         authenticationResponseInfo.setAccessToken("accessfsdsadfsdafsd");
         authenticationResponseInfo.setUserName("kishore@gmail.com");
 
@@ -115,9 +113,7 @@ public class LoginControllerTest {
                 "133", new ArrayList<>());
         AuthenticationResponseInfo authenticationResponseInfo = new AuthenticationResponseInfo();
         authenticationResponseInfo.setAccessTokenExpiration(accessTokenExpirationTime);
-        authenticationResponseInfo.setRefreshTokenExpiration(refreshTokenExpirationTime);
         authenticationResponseInfo.setId(2l);
-        authenticationResponseInfo.setRefreshToken("refreshfasfsafsadfdsf");
         authenticationResponseInfo.setAccessToken("accessfsdsadfsdafsd");
         authenticationResponseInfo.setUserName("kishore@gmail.com");
 
@@ -149,9 +145,7 @@ public class LoginControllerTest {
                 "133", new ArrayList<>());
         AuthenticationResponseInfo authenticationResponseInfo = new AuthenticationResponseInfo();
         authenticationResponseInfo.setAccessTokenExpiration(accessTokenExpirationTime);
-        authenticationResponseInfo.setRefreshTokenExpiration(refreshTokenExpirationTime);
         authenticationResponseInfo.setId(2l);
-        authenticationResponseInfo.setRefreshToken("refreshfasfsafsadfdsf");
         authenticationResponseInfo.setAccessToken("accessfsdsadfsdafsd");
         authenticationResponseInfo.setUserName("kishore@gmail.com");
 

@@ -3,6 +3,9 @@ package com.user.controller;
 import com.user.entity.User;
 import com.user.exception.DuplicateResourceFoundException;
 import com.user.service.UserService;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +22,8 @@ public class RegistrationController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> addUser(@RequestBody User user) throws DuplicateResourceFoundException {
+    public ResponseEntity<?> addUser(
+            @RequestBody User user) throws DuplicateResourceFoundException {
 
         User newUser = userService.save(user);
         ResponseEntity<User> responseEntity =

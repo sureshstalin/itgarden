@@ -3,6 +3,7 @@ package com.user.controller;
 import com.user.config.SecurityConfig;
 import com.user.controller.RegistrationController;
 import com.user.entity.User;
+import com.user.entity.UserPassword;
 import com.user.filters.JwtRequestFilter;
 import com.user.service.JwtUtilService;
 import com.user.service.LoginUserDetailsService;
@@ -22,6 +23,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -44,11 +49,21 @@ public class RegistrationControllerTest {
     public void registerUserTest() throws Exception {
         String requestBody = "{ \"firstName\":\"Suresh\",\"lastName\":\"Kesavan\",\"email\":\"suresh@gmail.com\",\"password\":\"123\",\"mobileNo\":1233444}";
         User user = new User();
-        user.setPassword("123");
-        user.setMobileNo("12383");
+//            user.setPassword("133");
+        user.setId(2l);
+        user.setDateCreated(LocalDateTime.now());
         user.setEmail("suresh@gmail.com");
         user.setFirstName("Suresh");
-        user.setLastName("Stalin");
+        user.setLastName("Kesavan");
+        user.setMobileNo("83838833");
+        List<UserPassword> userPasswords = new ArrayList<>();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword("123");
+        userPassword.setUser(user);
+        userPassword.setAppName("test");
+        userPassword.setId(1l);
+        userPasswords.add(userPassword);
+        user.setUserPasswords(userPasswords);
 
         when(userService.save(Mockito.any(User.class))).thenReturn(user);
         RequestBuilder requestBuilder = MockMvcRequestBuilders

@@ -1,9 +1,11 @@
 package com.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "jwttoken")
 @Entity
-public class JwtToken {
+public class JwtToken implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,7 @@ public class JwtToken {
     @Column(name = "access_token")
     private String accessToken;
 
+    @JsonIgnore
     @Column(name = "refresh_token")
     private String refreshToken;
 
@@ -31,6 +34,7 @@ public class JwtToken {
     @Column(name = "access_token_expiration")
     private LocalDateTime accessTokenExpiration;
 
+    @JsonIgnore
     @Column(name = "refresh_token_expiration")
     private LocalDateTime refreshTokenExpiration;
 

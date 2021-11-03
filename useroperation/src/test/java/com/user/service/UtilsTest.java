@@ -31,10 +31,10 @@ public class UtilsTest {
         return date;
     }
 
-    @Test
-    public void currentDateTest() {
-        Assertions.assertEquals(LocalDateTime.now(),utils.currentDateTime());
-    }
+//    @Test
+//    public void currentDateTest() {
+//        Assertions.assertEquals(LocalDateTime.now(),utils.currentDateTime());
+//    }
 
     @Test
     public  void convertToLocalDateTimeTest() {

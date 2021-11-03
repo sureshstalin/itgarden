@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 @Service
@@ -36,11 +37,14 @@ public class LoginUserDetailsService implements UserDetailsService {
     @Autowired
     Utils utils;
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
+        String password = user.getUserPasswords().get(0).getPassword();
+//        user.setPassword(password);
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), new ArrayList<>());
+                password, new ArrayList<>());
         return userDetails;
     }
 
@@ -66,9 +70,7 @@ public class LoginUserDetailsService implements UserDetailsService {
     public JwtToken saveJwt(AuthenticationResponseInfo authenticationResponseInfo) {
         JwtToken jwtToken = new JwtToken();
         jwtToken.setAccessToken(authenticationResponseInfo.getAccessToken());
-        jwtToken.setRefreshToken(authenticationResponseInfo.getRefreshToken());
         jwtToken.setAccessTokenExpiration(authenticationResponseInfo.getAccessTokenExpiration());
-        jwtToken.setRefreshTokenExpiration(authenticationResponseInfo.getRefreshTokenExpiration());
         jwtToken.setId(authenticationResponseInfo.getId());
 
         jwtToken.setUserName(authenticationResponseInfo.getUserName());

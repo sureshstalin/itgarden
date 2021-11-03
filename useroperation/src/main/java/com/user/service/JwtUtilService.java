@@ -3,7 +3,6 @@ package com.user.service;
 
 import com.user.entity.JwtToken;
 import com.user.exception.InvalidInputException;
-import com.user.exception.InvalidTokenException;
 import com.user.repository.JwtTokenRepository;
 import com.user.repository.UserRepository;
 import com.user.staticdata.TokenType;
@@ -41,20 +40,11 @@ public class JwtUtilService {
 
     public String extractUsername(String token, TokenType tokenType) {
         String userName = extractClaim(token, Claims::getSubject);
-        String dbToken = "";
         JwtToken jwtToken = jwtTokenRepository.findByUserName(userName);
-        if (tokenType.equals(TokenType.ACCESS_TOKEN)) {
-            dbToken = jwtToken.getAccessToken();
-        } else
-            dbToken = jwtToken.getRefreshToken();
-        if (jwtToken == null) {
-            throw new InvalidTokenException("Invalid Token: User Name is not found ");
-        }
-        if (!token.equals(dbToken)) {
-            throw new InvalidTokenException("Invalid Token: Token Mismatch  ");
-        } else {
+        if(jwtToken != null) {
             return jwtToken.getUserName();
         }
+        return null;
     }
 
 
@@ -69,7 +59,7 @@ public class JwtUtilService {
 
     }
 
-    public Boolean isAccessTokenExpired(String token) throws InvalidTokenException {
+    public Boolean isAccessTokenExpired(String token) throws InvalidInputException {
         final String username = extractUsername(token, TokenType.ACCESS_TOKEN);
         JwtToken jwtToken = jwtTokenRepository.findByUserName(username);
         LocalDateTime accessTokenLocalDateTime = jwtToken.getAccessTokenExpiration();
@@ -78,13 +68,6 @@ public class JwtUtilService {
 
     }
 
-//    public Boolean isRefreshTokenExpired(String token) throws InvalidTokenException {
-//        final String username = extractUsername(token, TokenType.REFRESH_TOKEN);
-//        JwtToken jwtToken = jwtTokenRepository.findByUserName(username);
-//        LocalDateTime refreshLocalDateTime = jwtToken.getRefreshTokenExpiration();
-//        LocalDateTime currentLocalDateTime = LocalDateTime.now();
-//        return currentLocalDateTime.isAfter(refreshLocalDateTime);
-//    }
 
     public String generateAccessToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -97,21 +80,13 @@ public class JwtUtilService {
      */
     private String createToken(Map<String, Object> claims, String subject, TokenType tokenType) {
 
-        if (tokenType.equals(TokenType.ACCESS_TOKEN)) {
             return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
                     .signWith(SignatureAlgorithm.HS256, secret).compact();
-        }
-        return null;
     }
 
-    public Boolean isValidToken(String token, TokenType tokenType) throws InvalidTokenException {
+    public Boolean isValidToken(String token, TokenType tokenType) throws InvalidInputException {
         List<String> errorList = new ArrayList<>();
-//        if (tokenType.equals(TokenType.REFRESH_TOKEN)) {
-//            if (isRefreshTokenExpired(token)) {
-//                errorList.add("Invalid Refresh Token: Refresh Token is expired");
-//            }
-//        }
         if (tokenType.equals(TokenType.ACCESS_TOKEN)) {
             if (isAccessTokenExpired(token)) {
                 errorList.add("Invalid Access Token: Access Token is expired");
