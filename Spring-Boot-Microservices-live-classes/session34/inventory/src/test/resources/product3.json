@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "name": "Suresh",
+    "address": "address1",
+    "age": 30,
+    "product": [
+      {
+        "id": 1,
+        "productName": "Coffee",
+        "price": 200
+      },
+      {
+        "id": 2,
+        "productName": "Shirt",
+        "price": 300
+      },
+      {
+        "id": 3,
+        "productName": "Z Book",
+        "price": 100
+      }
+    ]
+  }
+]
