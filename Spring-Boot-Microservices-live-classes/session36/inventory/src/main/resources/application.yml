@@ -1,0 +1,14 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: jpatest
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_db
+    username: billing-admin
+    password: billing123$$
+    driver-class-name: com.mysql.cj.jdbc.Driver
